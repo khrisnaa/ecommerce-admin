@@ -13,7 +13,6 @@ export const ModalProvider = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
   //not render modal in server side
   if (!isMounted) return null;
 

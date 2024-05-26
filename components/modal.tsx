@@ -24,6 +24,7 @@ export const Modal = ({
   onClose,
   children,
 }: ModalProps) => {
+  //handle ssr hydration error
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
