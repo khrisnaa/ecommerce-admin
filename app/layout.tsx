@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+
+import { ModalProvider } from "@/providers/modal-provider";
+
+import "./globals.css";
 
 const font = Montserrat({ subsets: ["latin"] });
 
@@ -18,7 +21,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={font.className}>{children}</body>
+        <body className={font.className}>
+          <ModalProvider />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );
