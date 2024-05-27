@@ -1,5 +1,5 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { formSchema } from "@/schemas";
+import { storeSchema } from '@/schemas';
 
-export type formSchemaType = z.infer<typeof formSchema>;
+export type storeSchemaType = z.infer<typeof storeSchema>;

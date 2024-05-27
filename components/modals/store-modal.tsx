@@ -1,12 +1,14 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { startTransition, useState, useTransition } from 'react';
+import axios from 'axios';
 
-import { Modal } from "@/components/modal";
-import { useStoreModal } from "@/hooks/use-store-modal";
-import { formSchemaType } from "@/schemas/definition";
-import { formSchema } from "@/schemas";
+import { Modal } from '@/components/modal';
+import { useStoreModal } from '@/hooks/use-store-modal';
+import { storeSchemaType } from '@/schemas/definition';
+import { storeSchema } from '@/schemas';
 import {
   Form,
   FormControl,
@@ -14,23 +16,44 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 
 export const StoreModal = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   // const storeModal = useStoreModal();
   const { isOpen, onOpen, onClose } = useStoreModal();
 
-  const form = useForm<formSchemaType>({
-    resolver: zodResolver(formSchema),
+  const { toast } = useToast();
+
+  const form = useForm<storeSchemaType>({
+    resolver: zodResolver(storeSchema),
     defaultValues: {
-      name: "",
+      name: '',
     },
   });
 
-  const onSubmit = (values: formSchemaType) => {
-    console.log(values);
+  const onSubmit = async (values: storeSchemaType) => {
+    try {
+      setIsLoading(true);
+
+      const response = await axios.post('/api/stores', values);
+
+      toast({
+        variant: 'default',
+        description: 'Store created!',
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        description: 'Something went wrong!',
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -56,6 +79,7 @@ export const StoreModal = () => {
                           {...field}
                           placeholder="E-Commerce"
                           type="text"
+                          disabled={isLoading}
                         />
                       </FormControl>
                       <FormMessage />
@@ -63,11 +87,17 @@ export const StoreModal = () => {
                   )}
                 />
               </div>
-              <div className="flex space-x-2 items-center justify-end">
-                <Button onClick={onClose} variant="outline">
+              <div className="flex items-center justify-end space-x-2">
+                <Button
+                  onClick={onClose}
+                  variant="outline"
+                  disabled={isLoading}
+                >
                   Cancel
                 </Button>
-                <Button type="submit">Continue</Button>
+                <Button type="submit" disabled={isLoading}>
+                  Continue
+                </Button>
               </div>
             </form>
           </Form>
