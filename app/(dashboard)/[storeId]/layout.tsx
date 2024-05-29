@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 
 import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs/server';
+import { Navbar } from '@/components/navbar';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -26,7 +27,7 @@ const Layout = async ({ children, params }: LayoutProps) => {
 
   return (
     <>
-      <div>Navbar</div>
+      <Navbar />
       {children}
     </>
   );

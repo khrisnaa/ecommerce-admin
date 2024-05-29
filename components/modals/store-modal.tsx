@@ -42,10 +42,8 @@ export const StoreModal = () => {
 
       const response = await axios.post('/api/stores', values);
 
-      toast({
-        variant: 'default',
-        description: 'Store created!',
-      });
+      //complete refresh website
+      window.location.assign(`/${response.data.id}`);
     } catch (error) {
       toast({
         variant: 'destructive',

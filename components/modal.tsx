@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Dialog,
@@ -6,8 +6,8 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { useEffect, useState } from "react";
+} from '@/components/ui/dialog';
+import { useEffect, useState } from 'react';
 
 interface ModalProps {
   title: string;

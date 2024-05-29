@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { StoreModal } from "@/components/modals/store-modal";
+import { StoreModal } from '@/components/modals/store-modal';
 
 //provider for open and close model
 export const ModalProvider = () => {
