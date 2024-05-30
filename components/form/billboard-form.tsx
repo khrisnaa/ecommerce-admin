@@ -5,11 +5,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 
-import { Store } from '@prisma/client';
+import { Billboard } from '@prisma/client';
 import { Heading } from '@/components/heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { storeSchema, storeSchemaType } from '@/schemas';
+import { billboardSchema, billboardSchemaType } from '@/schemas';
 import { useState } from 'react';
 import {
   Form,
@@ -25,12 +25,13 @@ import { useParams, useRouter } from 'next/navigation';
 import { AlertModal } from '@/components/modals/alert-modal';
 import { ApiAlert } from '@/components/api-alert';
 import { useOrigin } from '@/hooks/use-origin';
+import { ImageUpload } from '@/components/image-upload';
 
-interface SettingsFormProps {
-  initialData: Store;
+interface BillboardFormProps {
+  initialData: Billboard | null;
 }
 
-export const SettingsForm = ({ initialData }: SettingsFormProps) => {
+export const BillboardForm = ({ initialData }: BillboardFormProps) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -38,23 +39,38 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
   const router = useRouter();
 
   const { toast } = useToast();
-
   const origin = useOrigin();
 
-  const form = useForm<storeSchemaType>({
-    resolver: zodResolver(storeSchema),
-    defaultValues: initialData,
+  const title = initialData ? 'Edit billboard' : 'Create billboard';
+  const description = initialData ? 'Edit a billboard' : 'Add a new billboard';
+  const toastMessage = initialData ? 'Billboard updated' : 'Billboard created';
+  const action = initialData ? 'Save changes' : 'Create';
+
+  const form = useForm<billboardSchemaType>({
+    resolver: zodResolver(billboardSchema),
+    defaultValues: initialData || {
+      label: '',
+      image: '',
+    },
   });
 
-  const onSubmit = async (values: storeSchemaType) => {
+  const onSubmit = async (values: billboardSchemaType) => {
     console.log(params);
     try {
       setLoading(true);
-      await axios.patch(`/api/stores/${params.storeId}`, values);
+      if (initialData) {
+        await axios.patch(
+          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          values,
+        );
+      } else {
+        await axios.post(`/api/${params.storeId}/billboards`, values);
+      }
       router.refresh();
+      router.push(`/${params.storeId}/billboards`);
       toast({
         variant: 'default',
-        description: 'Store has been updated!',
+        description: toastMessage,
       });
     } catch {
       toast({
@@ -69,17 +85,20 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/stores/${params.storeId}`);
+      await axios.delete(
+        `/api/${params.storeId}/billboards/${params.billboardId}`,
+      );
       router.refresh();
       router.push('/');
       toast({
         variant: 'default',
-        description: 'Store has been deleted!',
+        description: 'Billboard deleted',
       });
     } catch (error) {
       toast({
         variant: 'destructive',
-        description: 'Make sure you removed all products and categories first',
+        description:
+          'Make sure you removed all categories using this billboard',
       });
     } finally {
       setLoading(false);
@@ -95,10 +114,17 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
         loading={loading}
       />
       <div className="flex items-center justify-between">
-        <Heading title="Settings" description="Manage store preferences" />
-        <Button onClick={() => setOpen(true)} variant="destructive" size="sm">
-          <Trash className="h-4 w-4" />
-        </Button>
+        <Heading title={title} description={description} />
+        {initialData && (
+          <Button
+            onClick={() => setOpen(true)}
+            variant="destructive"
+            size="sm"
+            disabled={loading}
+          >
+            <Trash className="h-4 w-4" />
+          </Button>
+        )}
       </div>
       <Separator />
       <Form {...form}>
@@ -106,17 +132,35 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-6"
         >
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Background image</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value ? [field.value] : []}
+                    disabled={loading}
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange('')}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-3 gap-4">
             <FormField
               control={form.control}
-              name="name"
+              name="label"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Label</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder="Store name"
+                      placeholder="Billboard label"
                       disabled={loading}
                     />
                   </FormControl>
@@ -126,16 +170,10 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
             />
           </div>
           <Button type="submit" disabled={loading}>
-            Save Changes
+            {action}
           </Button>
         </form>
       </Form>
-      <Separator />
-      <ApiAlert
-        title="NEXT_PUBLIC_API_URL"
-        variant="public"
-        description={`${origin}/api/${params.storeId}`}
-      />
     </>
   );
 };

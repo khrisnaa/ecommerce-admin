@@ -3,7 +3,12 @@
 import { Store } from '@prisma/client';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { FaCheck, FaChevronDown, FaPlusCircle, FaStore } from 'react-icons/fa';
+import {
+  Check,
+  ChevronDown,
+  PlusCircle,
+  Store as StoreIcon,
+} from 'lucide-react';
 
 import {
   Popover,
@@ -66,9 +71,9 @@ export const StoreSwitcher = ({
           aria-label="Select a store"
           className={cn('flex w-[200px] justify-between', className)}
         >
-          <FaStore className="mr-2 h-4 w-4" />
+          <StoreIcon className="mr-2 h-4 w-4" />
           {currentStore?.label}
-          <FaChevronDown className="ml-auto h-3 w-3  shrink-0 opacity-50" />
+          <ChevronDown className="ml-auto h-4 w-4  shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
@@ -84,11 +89,11 @@ export const StoreSwitcher = ({
                   className="text-sm"
                 >
                   {' '}
-                  <FaStore className="mr-2 h-4 w-4" />
+                  <StoreIcon className="mr-2 h-4 w-4" />
                   {store.label}
-                  <FaCheck
+                  <Check
                     className={cn(
-                      'ml-auto h-3 w-3',
+                      'ml-auto h-4 w-4',
                       currentStore?.value === store.value
                         ? 'opacity-100'
                         : 'opacity-0',
@@ -107,7 +112,7 @@ export const StoreSwitcher = ({
                   onOpen();
                 }}
               >
-                <FaPlusCircle className="mr-2 h-4 w-4" />
+                <PlusCircle className="mr-2 h-4 w-4" />
                 Create Store
               </CommandItem>
             </CommandGroup>

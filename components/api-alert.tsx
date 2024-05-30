@@ -1,8 +1,9 @@
+import { Copy, Server } from 'lucide-react';
+
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge, BadgeProps } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
-import { FaCopy, FaServer } from 'react-icons/fa';
 
 interface ApiAlertProps {
   title: string;
@@ -35,7 +36,7 @@ export const ApiAlert = ({
   };
   return (
     <Alert>
-      <FaServer className="h-4 w-4" />
+      <Server className="h-4 w-4" />
       <AlertTitle className="flex items-center  gap-x-2">
         {title} <Badge variant={variantMap[variant]}>{textMap[variant]}</Badge>
       </AlertTitle>
@@ -44,7 +45,7 @@ export const ApiAlert = ({
           {description}
         </code>
         <Button onClick={onCopy} variant="outline" size="icon">
-          <FaCopy className="h-3 w-3" />
+          <Copy className="h-4 w-4" />
         </Button>
       </AlertDescription>
     </Alert>

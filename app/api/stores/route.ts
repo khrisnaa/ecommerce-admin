@@ -12,7 +12,7 @@ export const POST = async (req: Request) => {
 
     //check user already login and for identify who create the store
     if (!userId) {
-      return new NextResponse('Unauthorized', { status: 401 });
+      return new NextResponse('Unauthenticated', { status: 401 });
     }
 
     if (!name) {
