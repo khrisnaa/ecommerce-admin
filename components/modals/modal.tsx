@@ -39,7 +39,7 @@ export const Modal = ({
     <Dialog open={isOpen} onOpenChange={onChange}>
       <div>
         <DialogContent>
-          <DialogHeader>
+          <DialogHeader className="flex flex-col items-start ">
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>

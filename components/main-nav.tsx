@@ -13,8 +13,13 @@ export const MainNav = ({
 
   const routes = [
     {
-      href: `/${params.storeId}/settings`,
+      label: 'Dashboard',
+      href: `/${params.storeId}`,
+      active: pathname === `/${params.storeId}`,
+    },
+    {
       label: 'Settings',
+      href: `/${params.storeId}/settings`,
       active: pathname === `/${params.storeId}/settings`,
     },
   ];

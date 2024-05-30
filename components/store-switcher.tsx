@@ -45,7 +45,7 @@ export const StoreSwitcher = ({
   }));
 
   const currentStore = formattedItems.find(
-    (item) => item.value == params.storeIdF,
+    (item) => item.value == params.storeId,
   );
 
   const [open, setOpen] = useState(false);
@@ -67,7 +67,7 @@ export const StoreSwitcher = ({
           className={cn('flex w-[200px] justify-between', className)}
         >
           <FaStore className="mr-2 h-4 w-4" />
-          Current Store
+          {currentStore?.label}
           <FaChevronDown className="ml-auto h-3 w-3  shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -88,7 +88,7 @@ export const StoreSwitcher = ({
                   {store.label}
                   <FaCheck
                     className={cn(
-                      'ml-auto h-4 w-4',
+                      'ml-auto h-3 w-3',
                       currentStore?.value === store.value
                         ? 'opacity-100'
                         : 'opacity-0',

@@ -5,3 +5,5 @@ export const storeSchema = z.object({
     message: 'Store name must contain at least 1 character(s)',
   }),
 });
+
+export type storeSchemaType = z.infer<typeof storeSchema>;

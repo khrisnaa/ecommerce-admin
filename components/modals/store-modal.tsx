@@ -5,10 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { startTransition, useState, useTransition } from 'react';
 import axios from 'axios';
 
-import { Modal } from '@/components/modal';
+import { Modal } from '@/components/modals/modal';
 import { useStoreModal } from '@/hooks/use-store-modal';
-import { storeSchemaType } from '@/schemas/definition';
-import { storeSchema } from '@/schemas';
+import { storeSchema, storeSchemaType } from '@/schemas';
 import {
   Form,
   FormControl,

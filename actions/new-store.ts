@@ -1,9 +1,9 @@
 'use server';
 
-import { db } from '@/lib/db';
-import { storeSchema } from '@/schemas';
-import { storeSchemaType } from '@/schemas/definition';
 import { auth } from '@clerk/nextjs/server';
+
+import { db } from '@/lib/db';
+import { storeSchema, storeSchemaType } from '@/schemas';
 
 export const newStore = async (values: storeSchemaType) => {
   const validateFields = storeSchema.safeParse(values);
