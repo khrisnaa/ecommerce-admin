@@ -29,3 +29,25 @@ export const categorySchema = z.object({
 });
 
 export type categorySchemaType = z.infer<typeof categorySchema>;
+
+export const sizeSchema = z.object({
+  name: z.string().min(1, {
+    message: 'Size name must contain at least 1 character(s)',
+  }),
+  value: z.string().min(1, {
+    message: 'Value must contain at least 1 character(s)',
+  }),
+});
+
+export type sizeSchemaType = z.infer<typeof sizeSchema>;
+
+export const colorSchema = z.object({
+  name: z.string().min(1, {
+    message: 'Color name must contain at least 1 character(s)',
+  }),
+  value: z.string().min(1, {
+    message: 'Value must contain at least 1 character(s)',
+  }),
+});
+
+export type colorSchemaType = z.infer<typeof colorSchema>;
