@@ -16,4 +16,16 @@ export const billboardSchema = z.object({
     message: 'Billboard image url must contain at least 1 character(s)',
   }),
 });
+
 export type billboardSchemaType = z.infer<typeof billboardSchema>;
+
+export const categorySchema = z.object({
+  name: z.string().min(1, {
+    message: 'Category name must contain at least 1 character(s)',
+  }),
+  billboardId: z.string().min(1, {
+    message: 'Billboard id must contain at least 1 character(s)',
+  }),
+});
+
+export type categorySchemaType = z.infer<typeof categorySchema>;
