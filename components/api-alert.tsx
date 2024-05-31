@@ -38,7 +38,10 @@ export const ApiAlert = ({
     <Alert>
       <Server className="h-4 w-4" />
       <AlertTitle className="flex items-center  gap-x-2">
-        {title} <Badge variant={variantMap[variant]}>{textMap[variant]}</Badge>
+        {title}{' '}
+        <Badge variant={variantMap[variant]} className="rounded-xl">
+          {textMap[variant]}
+        </Badge>
       </AlertTitle>
       <AlertDescription className="flex items-center justify-between gap-x-2">
         <code className="relative rounded bg-muted px-2 py-1  font-mono text-sm font-semibold">
