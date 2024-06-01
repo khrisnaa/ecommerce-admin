@@ -1,7 +1,7 @@
 'use client';
 
+import { ProductColumn } from '@/components/product/columns';
 import { AlertModal } from '@/components/modals/alert-modal';
-import { ColorColumn } from '@/components/color/columns';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -16,7 +16,7 @@ import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export const CellAction = ({ data }: { data: ColorColumn }) => {
+export const CellAction = ({ data }: { data: ProductColumn }) => {
   const router = useRouter();
   const params = useParams();
 
@@ -29,23 +29,23 @@ export const CellAction = ({ data }: { data: ColorColumn }) => {
     navigator.clipboard.writeText(id);
     toast({
       variant: 'default',
-      description: 'Color id coppied to the clipboard!',
+      description: 'Product id coppied to the clipboard!',
     });
   };
 
   const onDelete = async (id: string) => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/colors/${id}`);
+      await axios.delete(`/api/${params.storeId}/products/${id}`);
       router.refresh();
       toast({
         variant: 'default',
-        description: 'Color deleted',
+        description: 'Product deleted',
       });
     } catch (error) {
       toast({
         variant: 'destructive',
-        description: 'Make sure you removed all products using this color',
+        description: 'Make sure you removed existing product',
       });
     } finally {
       setLoading(false);
@@ -75,7 +75,9 @@ export const CellAction = ({ data }: { data: ColorColumn }) => {
             Copy Id
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}
+            onClick={() =>
+              router.push(`/${params.storeId}/products/${data.id}`)
+            }
           >
             <Edit className="mr-2 h-4 w-4" />
             Update

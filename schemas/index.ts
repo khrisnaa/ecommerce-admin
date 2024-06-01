@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { coerce, z } from 'zod';
 
 export const storeSchema = z.object({
   name: z.string().min(1, {
@@ -51,3 +51,16 @@ export const colorSchema = z.object({
 });
 
 export type colorSchemaType = z.infer<typeof colorSchema>;
+
+export const productSchema = z.object({
+  name: z.string().min(1),
+  images: z.object({ url: z.string() }).array(),
+  price: z.coerce.number().min(1),
+  categoryId: z.string().min(1),
+  colorId: z.string().min(1),
+  sizeId: z.string().min(1),
+  isArchived: z.boolean().default(false).optional(),
+  isFeatured: z.boolean().default(false).optional(),
+});
+
+export type productSchemaType = z.infer<typeof productSchema>;
