@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { ProductCLient } from '@/components/product/product-client';
 import { ProductColumn } from '@/components/product/columns';
 import { db } from '@/lib/db';
-import { formater } from '@/lib/utils';
+import { formatter } from '@/lib/utils';
 
 const Page = async ({ params }: { params: { storeId: string } }) => {
   const products = await db.product.findMany({
@@ -25,7 +25,7 @@ const Page = async ({ params }: { params: { storeId: string } }) => {
     name: item.name,
     isFeatured: item.isFeatured,
     isArchived: item.isArchived,
-    price: formater.format(item.price.toNumber()),
+    price: formatter.format(item.price.toNumber()),
     category: item.category.name,
     size: item.size.name,
     color: item.color.value,
