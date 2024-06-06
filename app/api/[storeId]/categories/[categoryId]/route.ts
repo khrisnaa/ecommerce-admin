@@ -15,6 +15,7 @@ export const GET = async (
 
     const category = await db.category.findUnique({
       where: { id: categoryId },
+      include: { billboard: true },
     });
 
     return NextResponse.json(category);
