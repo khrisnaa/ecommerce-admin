@@ -11,7 +11,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   }
 
   //check if store exist or not
-  //if exist go to dashboard pag if not still in new store modal
+  //if exist go to dashboard page if not still in new store modal
   const store = await db.store.findFirst({ where: { userId } });
   if (store) {
     redirect(`/${store.id}`);
