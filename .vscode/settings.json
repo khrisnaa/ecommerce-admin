@@ -1,5 +1,6 @@
 {
   "WillLuke.nextjs.addTypesOnSave": true,
   "WillLuke.nextjs.hasPrompted": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "editor.fontFamily": "JetBrains Mono"
 }

@@ -25,7 +25,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { useParams, useRouter } from 'next/navigation';
 import { AlertModal } from '@/components/modals/alert-modal';
 import { ImageUpload } from '@/components/image-upload';
-import { url } from 'inspector';
 import {
   Select,
   SelectContent,
